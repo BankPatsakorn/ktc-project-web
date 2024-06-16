@@ -1,0 +1,316 @@
+<div ng-controller="DashboardAllController as dashboard">
+  <div class="container body">
+    <div class="main_container">
+      <!-- Header -->
+      <div ng-include="'header/views/header.client.view.html'"></div>
+      <!-- Sidebar -->
+      <div ng-include="'sidebar/views/sidebar.client.view.html'"></div>
+      <!-- Content -->
+      <div auto-height class="right_col">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="nav nav-tabs bar_tabs">
+              <li class="active">
+                <a href="#tab-all" data-toggle="tab" ng-click="triggerMasonry('tab-all')">{{ text.page_dashboard_all.tab_all }} ({{ dataForklift.length }})</a>
+              </li>
+              <li>
+                <a href="#tab-batt" data-toggle="tab" ng-click="triggerMasonry('tab-batt')">{{ text.page_dashboard_all.tab_batt }} ({{ dataForkliftBatt.length }})</a>
+              </li>
+              <li>
+                <a href="#tab-lpg" data-toggle="tab" ng-click="triggerMasonry('tab-lpg')">{{ text.page_dashboard_all.tab_lpg }} ({{ dataForkliftLpg.length }})</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <!-- ALL -->
+              <div ng-show="selectTab == 'tab-all'">
+                <div class="page-title">
+                  <div class="title_left">
+                    <h3>{{ text.page_dashboard_all.title }} ({{ text.page_dashboard_all.tab_all }})</h3>
+                  </div>
+                  <div class="title_right">
+                    <div class="col-md-5 col-sm-5 col-xs-12 pull-right">
+                      <div class="input-group">
+                        <input type="text" class="form-control input-sm" ng-model="ListDetail" placeholder="{{ text.page_dashboard_all.search }}">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                <!-- <div masonry-grid search="{{ ListDetail }}" toggle="{{ toggleMasonry }}" data="{{ dataForklift }}" class="row grid"> -->
+                  <div ng-show="dataForklift.length == 0" class="box-loadding">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                  </div>
+                  <!-- <div class="grid-sizer col-xs-12 col-sm-6 col-md-6 col-lg-4"></div> -->
+                  <div ng-repeat="forklift in dataForklift | filter:filterData">
+                    <div class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                      <a a ng-href="/{{ url_lang }}/dashboard/{{ forklift.modem_id }}" class="x_panel panel-hover">
+                        <div class="x_title">
+                          <h2><i class="icon-forklift"></i> {{ forklift.vehicle_name }}</h2>
+                          <div class="nav navbar-right">
+                            <div ng-show="forklift.vehicle_detail.vehicletype == 'รถไฟฟ้า'" class="box-percent">
+                              <div class="progress progress_sm">
+                                <div ng-class="['progress-bar', {
+                                  'bg-red': $iService.calBattery(forklift) < 30,
+                                  'bg-yellow': $iService.calBattery(forklift) >= 30 && $iService.calBattery(forklift) < 60,
+                                  'bg-green': $iService.calBattery(forklift) >= 60 }]"
+                                  ng-style="{'width': $iService.calBattery(forklift) + '%' }"></div>
+                              </div>
+                              <small><i ng-class="['fa', {
+                                'fa-battery-empty': $iService.calBattery(forklift) < 10,
+                                'fa-battery-quarter': $iService.calBattery(forklift) >= 10 && $iService.calBattery(forklift) < 30,
+                                'fa-battery-half': $iService.calBattery(forklift) >= 30 && $iService.calBattery(forklift) < 60,
+                                'fa-battery-full': $iService.calBattery(forklift) >= 60 }]">
+                                </i> {{ text.page_dashboard_all.battery }} {{ $iService.calBattery(forklift) }}%</small>
+                            </div>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                          <div class="flex-item flex-container">
+                            <div class="flex-item">
+                              <h4>{{ forklift.person_name == null ? "Firstname Lastname" : forklift.person_name }}</h4>
+                              <div class="box-vehicle-type">
+                                <label><i class="fa fa-car"></i> [ {{ forklift.vehicle_detail.vehicletype }} ]</label>
+                              </div>
+                              <div class="box-plant-code">
+                                <label><i class="fa fa-industry"></i> {{ text.page_dashboard_all.group_zone }}</label>
+                                <span> {{ forklift.setting.group_zone == null ? "\"----------\"" : forklift.setting.group_zone }}</span>
+                              </div>
+                              <div class="box-licence">
+                                <label><i class="fa fa-id-card"></i> {{ text.page_dashboard_all.licence }}</label>
+                                <span> {{ forklift.car_licence == null ? "\"----------\"" : forklift.car_licence }}</span>
+                              </div>
+                              <div class="box-work-time">
+                                <label><i class="fa fa-hourglass-half"></i> {{ text.page_dashboard_all.work_time }}</label>
+                                <span>{{ $iService.calWorkTime(forklift) }}{{ text.page_dashboard_all.hr }}</span>
+                              </div>
+                              <div class="box-speed">
+                                <label><i class="fa fa-tachometer"></i> {{ text.page_dashboard_all.speed }}</label>
+                                <span>{{ $iService.calSpeed(forklift) }}{{ text.page_dashboard_all.km_hr }}</span>
+                              </div>
+                              <div class="box-type-status">
+                                <label><i class="fa fa-cog"></i> {{ text.page_dashboard_all.status }}</label>
+                                <span ng-class="$iService.colorBadge(forklift.status)">{{ $iService.statusTextTracking(forklift.status) }}</span>
+                              </div>
+                            </div>
+                            <div class="box-user-image">
+                              <img lazy class="img-circle img-responsive" data-src="{{ forklift.person_code == null ? '../../static/assets/img/user.png' : $iService.api() + 'nissanForklift/getImageDriver/' + forklift.person_code }}"/>
+                            </div>
+                          </div>
+                          <div class="box-time">
+                            <label class="text-datetime"><i class="fa fa-calendar-o"></i> {{ text.page_dashboard_all.gps_datetime }}</label>
+                            <span>{{ $iService.formatTextDateTime(forklift.gps_datetime) }}</span>
+                            <label class="text-lasttime"><i class="fa fa-clock-o"></i> {{ $iService.formatTextDiff($iService.diffDuration(forklift.gps_datetime)) }}</label>
+                          </div>
+                        </div>
+                        <div ng-show="forklift.status_overtime" class="box-overtime">
+                          <div>
+                            <h1>{{ forklift.status_overtime_text }}</h1>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- BATT -->
+              <div ng-show="selectTab == 'tab-batt'">
+                <div class="page-title">
+                  <div class="title_left">
+                    <h3>{{ text.page_dashboard_all.title }} ({{ text.page_dashboard_all.tab_batt }})</h3>
+                  </div>
+                  <div class="title_right">
+                    <div class="col-md-5 col-sm-5 col-xs-12 pull-right">
+                      <div class="input-group">
+                        <input type="text" class="form-control input-sm" ng-model="ListDetailBatt" placeholder="{{ text.page_dashboard_all.search }}">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                <!-- <div masonry-grid search="{{ ListDetailBatt }}" toggle="{{ toggleMasonryBatt }}" data="{{ dataForkliftBatt }}" class="row grid"> -->
+                  <div ng-show="dataForkliftBatt.length == 0" class="box-loadding">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                  </div>
+                  <!-- <div class="grid-sizer col-xs-12 col-sm-6 col-md-6 col-lg-4"></div> -->
+                  <div ng-repeat="forklift in dataForkliftBatt | filter:filterDataBatt">
+                    <div class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                      <a a ng-href="/{{ url_lang }}/dashboard/{{ forklift.modem_id }}" class="x_panel panel-hover">
+                        <div class="x_title">
+                          <h2><i class="icon-forklift"></i> {{ forklift.vehicle_name }}</h2>
+                          <div class="nav navbar-right">
+                            <div ng-show="forklift.vehicle_detail.vehicletype == 'รถไฟฟ้า'" class="box-percent">
+                              <div class="progress progress_sm">
+                                <div ng-class="['progress-bar', {
+                                  'bg-red': $iService.calBattery(forklift) < 30,
+                                  'bg-yellow': $iService.calBattery(forklift) >= 30 && $iService.calBattery(forklift) < 60,
+                                  'bg-green': $iService.calBattery(forklift) >= 60 }]"
+                                  ng-style="{'width': $iService.calBattery(forklift) + '%' }"></div>
+                              </div>
+                              <small><i ng-class="['fa', {
+                                'fa-battery-empty': $iService.calBattery(forklift) < 10,
+                                'fa-battery-quarter': $iService.calBattery(forklift) >= 10 && $iService.calBattery(forklift) < 30,
+                                'fa-battery-half': $iService.calBattery(forklift) >= 30 && $iService.calBattery(forklift) < 60,
+                                'fa-battery-full': $iService.calBattery(forklift) >= 60 }]">
+                                </i> {{ text.page_dashboard_all.battery }} {{ $iService.calBattery(forklift) }}%</small>
+                            </div>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                          <div class="flex-item flex-container">
+                            <div class="flex-item">
+                              <h4>{{ forklift.person_name == null ? "Firstname Lastname" : forklift.person_name }}</h4>
+                              <div class="box-vehicle-type">
+                                <label><i class="fa fa-car"></i> [ {{ forklift.vehicle_detail.vehicletype }} ]</label>
+                              </div>
+                              <div class="box-plant-code">
+                                <label><i class="fa fa-industry"></i> {{ text.page_dashboard_all.group_zone }}</label>
+                                <span> {{ forklift.setting.group_zone == null ? "\"----------\"" : forklift.setting.group_zone }}</span>
+                              </div>
+                              <div class="box-licence">
+                                <label><i class="fa fa-id-card"></i> {{ text.page_dashboard_all.licence }}</label>
+                                <span> {{ forklift.car_licence == null ? "\"----------\"" : forklift.car_licence }}</span>
+                              </div>
+                              <div class="box-work-time">
+                                <label><i class="fa fa-hourglass-half"></i> {{ text.page_dashboard_all.work_time }}</label>
+                                <span>{{ $iService.calWorkTime(forklift) }}</span>
+                              </div>
+                              <div class="box-type-status">
+                                <label><i class="fa fa-cog"></i> {{ text.page_dashboard_all.status }}</label>
+                                <span ng-class="$iService.colorBadge(forklift.status)">{{ $iService.statusTextTracking(forklift.status) }}</span>
+                              </div>
+                            </div>
+                            <div class="box-user-image">
+                              <img lazy class="img-circle img-responsive" data-src="{{ forklift.person_code == null ? '../../static/assets/img/user.png' : $iService.api() + 'nissanForklift/getImageDriver/' + forklift.person_code }}"/>
+                            </div>
+                          </div>
+                          <div class="box-time">
+                            <label class="text-datetime"><i class="fa fa-calendar-o"></i> {{ text.page_dashboard_all.gps_datetime }}</label>
+                            <span>{{ $iService.formatTextDateTime(forklift.gps_datetime) }}</span>
+                            <label class="text-lasttime"><i class="fa fa-clock-o"></i> {{ $iService.formatTextDiff($iService.diffDuration(forklift.gps_datetime)) }}</label>
+                          </div>
+                        </div>
+                        <div ng-show="forklift.status_overtime" class="box-overtime">
+                          <div>
+                            <h1>{{ forklift.status_overtime_text }}</h1>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- LPG -->
+              <div ng-show="selectTab == 'tab-lpg'">
+                <div class="page-title">
+                  <div class="title_left">
+                    <h3>{{ text.page_dashboard_all.title }} ({{ text.page_dashboard_all.tab_lpg }})</h3>
+                  </div>
+                  <div class="title_right">
+                    <div class="col-md-5 col-sm-5 col-xs-12 pull-right">
+                      <div class="input-group">
+                        <input type="text" class="form-control input-sm" ng-model="ListDetailLpg" placeholder="{{ text.page_dashboard_all.search }}">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                <!-- <div masonry-grid search="{{ ListDetailLpg }}" toggle="{{ toggleMasonryLpg }}" data="{{ dataForkliftLpg }}" class="row grid"> -->
+                  <div ng-show="dataForkliftLpg.length == 0" class="box-loadding">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                  </div>
+                  <!-- <div class="grid-sizer col-xs-12 col-sm-6 col-md-6 col-lg-4"></div> -->
+                  <div ng-repeat="forklift in dataForkliftLpg | filter:filterDataLpg">
+                    <div class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                      <a a ng-href="/{{ url_lang }}/dashboard/{{ forklift.modem_id }}" class="x_panel panel-hover">
+                        <div class="x_title">
+                          <h2><i class="icon-forklift"></i> {{ forklift.vehicle_name }}</h2>
+                          <div class="nav navbar-right">
+                            <div ng-show="forklift.vehicle_detail.vehicletype == 'รถไฟฟ้า'" class="box-percent">
+                              <div class="progress progress_sm">
+                                <div ng-class="['progress-bar', {
+                                  'bg-red': $iService.calBattery(forklift) < 30,
+                                  'bg-yellow': $iService.calBattery(forklift) >= 30 && $iService.calBattery(forklift) < 60,
+                                  'bg-green': $iService.calBattery(forklift) >= 60 }]"
+                                  ng-style="{'width': $iService.calBattery(forklift) + '%' }"></div>
+                              </div>
+                              <small><i ng-class="['fa', {
+                                'fa-battery-empty': $iService.calBattery(forklift) < 10,
+                                'fa-battery-quarter': $iService.calBattery(forklift) >= 10 && $iService.calBattery(forklift) < 30,
+                                'fa-battery-half': $iService.calBattery(forklift) >= 30 && $iService.calBattery(forklift) < 60,
+                                'fa-battery-full': $iService.calBattery(forklift) >= 60 }]">
+                                </i> {{ text.page_dashboard_all.battery }} {{ $iService.calBattery(forklift) }}%</small>
+                            </div>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                          <div class="flex-item flex-container">
+                            <div class="flex-item">
+                              <h4>{{ forklift.person_name == null ? "Firstname Lastname" : forklift.person_name }}</h4>
+                              <div class="box-vehicle-type">
+                                <label><i class="fa fa-car"></i> [ {{ forklift.vehicle_detail.vehicletype }} ]</label>
+                              </div>
+                              <div class="box-plant-code">
+                                <label><i class="fa fa-industry"></i> {{ text.page_dashboard_all.group_zone }}</label>
+                                <span> {{ forklift.setting.group_zone == null ? "\"----------\"" : forklift.setting.group_zone }}</span>
+                              </div>
+                              <div class="box-licence">
+                                <label><i class="fa fa-id-card"></i> {{ text.page_dashboard_all.licence }}</label>
+                                <span> {{ forklift.car_licence == null ? "\"----------\"" : forklift.car_licence }}</span>
+                              </div>
+                              <div class="box-work-time">
+                                <label><i class="fa fa-hourglass-half"></i> {{ text.page_dashboard_all.work_time }}</label>
+                                <span>{{ $iService.calWorkTime(forklift) }}</span>
+                              </div>
+                              <div class="box-battery">
+                                <label><i class="fa fa-battery-half"></i> {{ text.page_dashboard_all.battery }}</label>
+                                <span>{{ $iService.calBattery(forklift) }}%</span>
+                              </div>
+                              <div class="box-type-status">
+                                <label><i class="fa fa-cog"></i> {{ text.page_dashboard_all.status }}</label>
+                                <span ng-class="$iService.colorBadge(forklift.status)">{{ $iService.statusTextTracking(forklift.status) }}</span>
+                              </div>
+                            </div>
+                            <div class="box-user-image">
+                              <img lazy class="img-circle img-responsive" data-src="{{ forklift.person_code == null ? '../../static/assets/img/user.png' : $iService.api() + 'nissanForklift/getImageDriver/' + forklift.person_code }}"/>
+                            </div>
+                          </div>
+                          <div class="box-time">
+                            <label class="text-datetime"><i class="fa fa-calendar-o"></i> {{ text.page_dashboard_all.gps_datetime }}</label>
+                            <span>{{ $iService.formatTextDateTime(forklift.gps_datetime) }}</span>
+                            <label class="text-lasttime"><i class="fa fa-clock-o"></i> {{ $iService.formatTextDiff($iService.diffDuration(forklift.gps_datetime)) }}</label>
+                          </div>
+                        </div>
+                        <div ng-show="forklift.status_overtime" class="box-overtime">
+                          <div>
+                            <h1>{{ forklift.status_overtime_text }}</h1>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div ng-include="'footer/views/footer.client.view.html'"></div>
+    </div>
+  </div>
+  <!-- Alert Message -->
+  <alert-message class="box-alert-message"></alert-message>
+  <!-- Modal Message -->
+  <modal-message visible="showModalMessage"></modal-message>
+  <!-- Modal Logout -->
+  <modal-logout visible="showModalLogout"></modal-logout>
+</div>

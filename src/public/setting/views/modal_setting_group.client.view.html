@@ -1,0 +1,60 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title">{{ title }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_group.group_id }}</label>
+              <input class="form-control" type="text" ng-model="inputGroupID" placeholder="{{ text.modal_setting_group.group_id }}" ng-disabled="confirmEdit">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_group.group_name }}</label>
+              <input class="form-control" type="text" ng-model="inputGroupName" placeholder="{{ text.modal_setting_group.group_name }}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_group.password }}</label>
+              <input class="form-control" type="password" ng-model="inputPassword" placeholder="{{ text.modal_setting_group.password }}" ng-disabled="confirmEdit">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_group.confirm_password }}</label>
+              <input class="form-control" type="password" ng-model="inputConfirmPassword" placeholder="{{ text.modal_setting_group.confirm_password }}" ng-disabled="confirmEdit">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label>{{ text.modal_setting_group.vehicle_name }}</label>
+              <select
+                class="form-control"
+                ng-model="bundleVehicle"
+                title="{{ text.modal_setting_group.vehicle_name }}"
+                data="{{ dataSelectVehicles }}"
+                select2
+                multiple="true"
+                style="width: 100%;">
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">{{ btn_close }}</button>
+        <button type="button" class="btn btn-primary btn-flat" data-dismiss="modal" ng-click="confirm()">{{ btn_edit }}</button>
+      </div>
+    </div>
+  </div>
+</div>

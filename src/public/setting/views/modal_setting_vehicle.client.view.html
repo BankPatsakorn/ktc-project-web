@@ -1,0 +1,206 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title">{{ text.modal_setting_vehicle.title }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.box_no }}</label>
+              <input class="form-control" type="text" ng-model="inputModemId" valid-number placeholder="{{ text.modal_setting_vehicle.box_no }}" disabled>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.group_zone }}</label>
+              <input class="form-control" type="text" ng-model="inputGroupZone" valid-number placeholder="{{ text.modal_setting_vehicle.group_zone }}">
+            </div>
+          </div>
+        </div>
+        <div class="row"> 
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.vehicle_name }}</label>
+              <input class="form-control" type="text" ng-model="inputVehicleName" placeholder="{{ text.modal_setting_vehicle.vehicle_name }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.license }}</label>
+              <input class="form-control" type="text" ng-model="inputLicense" placeholder="{{ text.modal_setting_vehicle.license }}">
+            </div>
+          </div>
+        </div>
+        <div class="row"> 
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.brand }}</label>
+              <select
+                class="form-control"
+                ng-model="selectVehicleBrand"
+                title="{{ text.modal_setting_vehicle.select_brand }}"
+                data="{{ dataVehicleBrand }}"
+                select2
+                style="width: 100%;">
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.model }}</label>
+              <select
+                class="form-control"
+                ng-model="selectVehiclesModel"
+                title="{{ text.modal_setting_vehicle.select_model }}"
+                data="{{ dataVehicleModel }}"
+                select2
+                style="width: 100%;">
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row"> 
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.type }}</label>
+              <select
+                class="form-control"
+                ng-model="selectVehiclesType"
+                title="{{ text.modal_setting_vehicle.select_type }}"
+                data="{{ dataVehicleType }}"
+                select2
+                style="width: 100%;">
+            </select>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.color }}</label>
+              <select
+                class="form-control"
+                ng-model="selectColor"
+                title="{{ text.modal_setting_vehicle.select_color }}"
+                data="{{ dataColor }}"
+                select2
+                style="width: 100%;">
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row"> 
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.sim_number }}</label>
+              <input class="form-control" type="text" ng-model="inputSimNumber" valid-number placeholder="{{ text.modal_setting_vehicle.sim_number }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.sim_brand }}</label>
+              <select
+                class="form-control"
+                ng-model="selectSimBrand"
+                title="{{ text.modal_setting_vehicle.select_sim_brand }}"
+                data="{{ dataSimBrand }}"
+                select2
+                style="width: 100%;">
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row"> 
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.over_speed }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputOverSpeed" valid-number placeholder="{{ text.modal_setting_vehicle.over_speed }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.idling }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputIdling" valid-number placeholder="{{ text.modal_setting_vehicle.idling }}">
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row"> 
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.rate_fule_1 }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputRateFule1" valid-number placeholder="{{ text.modal_setting_vehicle.rate_fule_1 }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.fuel_tank }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputFuelTank" valid-number placeholder="{{ text.modal_setting_vehicle.fuel_tank }}">
+            </div>
+          </div>
+        </div> -->
+        <div class="row"> 
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.calibrate_work_time }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputCalibrateWorkTime" valid-number placeholder="{{ text.modal_setting_vehicle.calibrate_work_time }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.compensate_work_time }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputCompensateWorkTime" valid-number placeholder="{{ text.modal_setting_vehicle.compensate_work_time }}" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="row"> 
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.calibrate_battery }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputCalibrateBattery" valid-number placeholder="{{ text.modal_setting_vehicle.calibrate_battery }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.compensate_battery }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputCompensateBattery" valid-number placeholder="{{ text.modal_setting_vehicle.compensate_battery }}" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="row"> 
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.calibrate_mileage }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputCalibrateMileage" valid-number placeholder="{{ text.modal_setting_vehicle.calibrate_mileage }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.compensate_mileage }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputCompensateMileage" valid-number placeholder="{{ text.modal_setting_vehicle.compensate_mileage }}" disabled>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row"> 
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.card_reader }}</label>
+              <input class="form-control" type="text" ng-model="inputStatusCardReader" disabled="true" placeholder="{{ text.modal_setting_vehicle.card_reader }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_vehicle.send_dlt }}</label>
+              <input class="form-control" type="text" ng-model="inputStatusSendDlt" disabled="true" placeholder="{{ text.modal_setting_vehicle.send_dlt }}">
+            </div>
+          </div>
+        </div> -->
+        <input class="form-control" type="hidden" ng-model="inputModemId">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">{{ text.modal_setting_vehicle.btn_close }}</button>
+        <button type="button" class="btn btn-primary btn-flat" data-dismiss="modal" ng-click="confirm()">{{ text.modal_setting_vehicle.btn_edit }}</button>
+      </div>
+    </div>
+  </div>
+</div>

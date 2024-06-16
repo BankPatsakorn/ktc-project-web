@@ -1,0 +1,38 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title">{{ text.modal_setting_mileage.title }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_mileage.mileage_start }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputMileageStart" placeholder="{{ text.modal_setting_mileage.mileage_start }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_mileage.mileage_end }}</label>
+              <input input-type-number class="form-control" type="text" ng-model="inputMileageEnd" placeholder="{{ text.modal_setting_mileage.mileage_end }}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label>{{ text.modal_setting_mileage.message }}</label>
+              <input class="form-control" type="text" ng-model="inputMessage" placeholder="{{ text.modal_setting_mileage.message }}">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">{{ text.modal_setting_mileage.btn_close }}</button>
+        <button type="button" class="btn btn-primary btn-flat" data-dismiss="modal" ng-click="confirm()">{{ text.modal_setting_mileage.btn_edit }}</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title">{{ title }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_staff.first_name }}</label>
+              <input class="form-control" type="text" ng-model="inputFirstName" placeholder="{{ text.modal_setting_staff.first_name }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_staff.last_name }}</label>
+              <input class="form-control" type="text" ng-model="inputLastName" placeholder="{{ text.modal_setting_staff.last_name }}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_staff.email }}</label>
+              <input class="form-control" type="text" ng-model="inputEmail" placeholder="{{ text.modal_setting_staff.email }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_staff.phone }}</label>
+              <input class="form-control" type="text" ng-model="inputPhone" valid-number placeholder="{{ text.modal_setting_staff.phone }}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_staff.department }}</label>
+              <input class="form-control" type="text" ng-model="inputDepartment" placeholder="{{ text.modal_setting_staff.department }}">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ text.modal_setting_staff.group_zone }}</label>
+              <input class="form-control" type="text" ng-model="inputGroupZone" placeholder="{{ text.modal_setting_staff.group_zone }}">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">{{ btn_close }}</button>
+        <button type="button" class="btn btn-primary btn-flat" data-dismiss="modal" ng-click="confirm()">{{ btn_edit }}</button>
+      </div>
+    </div>
+  </div>
+</div>

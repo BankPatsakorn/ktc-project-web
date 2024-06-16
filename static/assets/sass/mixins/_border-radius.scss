@@ -1,0 +1,8 @@
+@mixin border-radius($size1: 6px, $size2: 6px, $size3: 6px, $size4: 6px)
+{
+    -webkit-border-radius: $size1 $size2 $size3 $size4;
+       -moz-border-radius: $size1 $size2 $size3 $size4;
+            border-radius: $size1 $size2 $size3 $size4;
+
+         -o-border-radius: $size1 $size2 $size3 $size4;
+}

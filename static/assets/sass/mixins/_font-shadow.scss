@@ -1,0 +1,8 @@
+@mixin font-shadow($distance: 0, $spread: 5px, $size: 15px, $color: rgba(0, 0, 0, .2))
+{
+    -webkit-text-shadow: $distance $spread $size $color;
+       -moz-text-shadow: $distance $spread $size $color;
+            text-shadow: $distance $spread $size $color;
+
+         -o-text-shadow: $distance $spread $size $color;
+}

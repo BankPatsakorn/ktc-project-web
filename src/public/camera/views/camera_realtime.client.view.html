@@ -1,0 +1,50 @@
+<div ng-controller="CameraRealtimeController as camera">
+  <div class="container body">
+    <div class="main_container">
+      <!-- Header -->
+      <div ng-include="'header/views/header.client.view.html'"></div>
+      <!-- Sidebar -->
+      <div ng-include="'sidebar/views/sidebar.client.view.html'"></div>
+      <!-- Content -->
+      <div auto-height class="right_col">
+        <div class="page-title">
+          <div class="title_left">
+            <h3>{{ text.page_camera_realtime.title }}</h3>
+          </div>
+          <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 pull-right">
+              <div class="input-group">
+                <input type="text" class="form-control input-sm" ng-model="ListDetail" placeholder="{{ text.page_camera_realtime.search }}">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row grid">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="box-camera" ng-repeat="camera in dataCameraRealtime | filter:filterData">
+              <div id="toggle-{{ camera.modem_id }}" class="toggle-fullscreen">
+                <i class="fa fa-expand"></i>
+              </div>
+              <div screenfull id="{{ camera.modem_id }}" class="camera">
+                <div>
+                  <img id="camera-{{ camera.modem_id }}" camera-view ng-src="{{ camera.camera_url }}">
+                </div>
+                <p ng-class="$iService.statusTextColor(camera.status)"><i class="fa fa-circle"></i> {{ camera.vehicle_name }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div ng-include="'footer/views/footer.client.view.html'"></div>
+    </div>
+  </div>
+  <!-- Alert Message -->
+  <alert-message class="box-alert-message"></alert-message>
+  <!-- Modal Message -->
+  <modal-message visible="showModalMessage"></modal-message>
+  <!-- Modal Logout -->
+  <modal-logout visible="showModalLogout"></modal-logout>
+</div>

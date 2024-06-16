@@ -1,0 +1,150 @@
+<div ng-controller="DashboardController as dashboard">
+  <div class="container body">
+    <div class="main_container">
+      <!-- Header -->
+      <div ng-include="'header/views/header.client.view.html'"></div>
+      <!-- Sidebar -->
+      <div ng-include="'sidebar/views/sidebar.client.view.html'"></div>
+      <!-- Content -->
+      <div auto-height class="right_col">
+        <div class="page-title">
+          <div class="title_left">
+            <h3>
+              {{ dataForklift.vehicle_name || text.page_dashboard.title }}
+              <button class="btn btn-round btn-primary btn-back" ng-click="back()">
+                <i class="fa fa-chevron-left"></i> {{ text.page_dashboard.btn_back }}
+              </button>
+            </h3>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+          <div ng-show="dataTrackingRealtime.length == 0" class="box-loadding">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+          </div>
+          <div ng-show="dataTrackingRealtime.length > 0" class="grid-item col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2 class="box-type-status">
+                  <i class="fa fa-cog"></i> {{ text.page_dashboard.title_status }}
+                  <span ng-class="$iService.statusTextColor(dataForklift.status)">{{ $iService.statusTextTracking(dataForklift.status) }}</span>
+                </h2>
+                <div class="nav navbar-right">
+                  <div ng-show="dataForklift.vehicle_detail.vehicletype == 'รถไฟฟ้า'" class="box-percent">
+                    <div class="progress progress_sm">
+                      <div ng-class="['progress-bar', {
+                        'bg-red': $iService.calBattery(dataForklift) < 30,
+                        'bg-yellow': $iService.calBattery(dataForklift) >= 30 && $iService.calBattery(dataForklift) < 60,
+                        'bg-green': $iService.calBattery(dataForklift) >= 60 }]"
+                        ng-style="{'width': $iService.calBattery(dataForklift) + '%' }"></div>
+                    </div>
+                    <small><i ng-class="['fa', {
+                      'fa-battery-empty': $iService.calBattery(dataForklift) < 10,
+                      'fa-battery-quarter': $iService.calBattery(dataForklift) >= 10 && $iService.calBattery(dataForklift) < 30,
+                      'fa-battery-half': $iService.calBattery(dataForklift) >= 30 && $iService.calBattery(dataForklift) < 60,
+                      'fa-battery-full': $iService.calBattery(dataForklift) >= 60 }]"]>
+                      </i> {{ text.page_dashboard.battery }} {{ $iService.calBattery(dataForklift) }}%</small>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <div class="box-vehicle-type">
+                  <label><i class="fa fa-car"></i> [ {{ dataForklift.vehicle_detail.vehicletype }} ]</label>
+                </div>
+                <div class="box-modem-id">
+                  <label><i class="fa fa-id-card-o"></i> {{ text.page_dashboard.box_no }}</label>
+                  <span>{{ dataForklift.modem_id }}</span>
+                </div>
+                <div class="box-licence">
+                  <label><i class="fa fa-id-card"></i> {{ text.page_dashboard.licence }}</label>
+                  <span>{{ dataForklift.car_licence }}</span>
+                </div>
+                <div class="box-place">
+                  <label><i class="fa fa-map-marker"></i> {{ text.page_dashboard.place }}</label>
+                  <span>{{ $iService.setTextLocation(dataTrackingRealtime[0]) }}</span>
+                </div>
+                <div class="box-mileage">
+                  <label><i class="fa fa-tachometer"></i> {{ text.page_dashboard.mileage }}</label>
+                  <span>{{ $iService.calMileage(dataForklift) }}{{ text.page_dashboard.km }}</span>
+                </div>
+                <div class="box-work-time">
+                  <label><i class="fa fa-clock-o"></i> {{ text.page_dashboard.work_time }}</label>
+                  <span>{{ $iService.calWorkTime(dataForklift) }}{{ text.page_dashboard.hr }}</span>
+                </div>
+                <div class="box-speed">
+                  <label><i class="fa fa-tachometer"></i> {{ text.page_dashboard_all.speed }}</label>
+                  <span>{{ $iService.calSpeed(dataForklift) }}{{ text.page_dashboard.km_hr }}</span>
+                </div>
+                <div class="box-time">
+                  <label class="text-datetime"><i class="fa fa-calendar-o"></i> {{ text.page_dashboard.gps_datetime }}</label>
+                  <span>{{ $iService.formatTextDateTime(dataForklift.gps_datetime) }}</span>
+                  <label class="text-lasttime"><i class="fa fa-clock-o"></i> {{ $iService.formatTextDiff($iService.diffDuration(dataForklift.gps_datetime)) }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-show="dataTrackingRealtime.length > 0" class="grid-item col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2><i class="fa fa-info-circle"></i> {{ text.page_dashboard.title_detail }}</h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <div class="flex-item flex-container">
+                  <div class="box-user-image">
+                    <img lazy class="img-circle img-responsive" data-src="{{ dataForklift.person_code == null ? '../../static/assets/img/user.png' : $iService.api() + 'nissanForklift/getImageDriver/' + dataForklift.person_code }}"/>
+                  </div>
+                  <div class="flex-item box-detail-user">
+                    <h3>{{ dataForklift.person_name == null ? "Firstname Lastname" : dataForklift.person_name }}</h3>
+                    <div class="box-code-rfid">
+                      <label><i class="fa fa-address-card-o"></i> {{ text.page_dashboard.code_rfid }}</label>
+                      <span>{{ dataForklift.person_code == null ? "\"----------\"" : dataForklift.person_code + '/' + dataForklift.rfid }}</span>
+                    </div>
+                    <div class="box-department">
+                      <label><i class="fa fa-building"></i> {{ text.page_dashboard.department }}</label>
+                      <span>{{ dataForklift.organization_unit == null ? "\"----------\"" : dataForklift.organization_unit }}</span>
+                    </div>
+                    <div class="box-email">
+                      <label><i class="fa fa-envelope"></i> {{ text.page_dashboard.email }}</label>
+                      <span>{{ dataForklift.email == null ? "\"----------\"" : dataForklift.email }}</span>
+                    </div>
+                    <div class="box-phone">
+                      <label><i class="fa fa-phone"></i> {{ text.page_dashboard.phone }}</label>
+                      <span>{{ dataForklift.phone == null ? "\"----------\"" : dataForklift.phone }}</span>
+                    </div>
+                    <div class="box-last-scan">
+                      <label><i class="fa fa-clock-o"></i> {{ text.page_dashboard.last_scan }}</label>
+                      <span>{{ dataForklift.scan_datetime == null ? "\"----------\"" : dataForklift.scan_datetime }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-show="dataTrackingRealtime.length > 0" class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2><i class="fa fa-location-arrow"></i> {{ text.page_dashboard.title_position }}</h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <div map-panel class="box-map" id="map-forklift">
+                  <div ng-if="followModemId" class="btn-map btn-unfollow" ng-click="unfollowVehicle()">{{ text.page_dashboard.btn_unfollow }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div ng-include="'footer/views/footer.client.view.html'"></div>
+    </div>
+  </div>
+  <!-- Alert Message -->
+  <alert-message class="box-alert-message"></alert-message>
+  <!-- Modal Message -->
+  <modal-message visible="showModalMessage"></modal-message>
+  <!-- Modal Logout -->
+  <modal-logout visible="showModalLogout"></modal-logout>
+</div>

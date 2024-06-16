@@ -1,0 +1,36 @@
+<div ng-controller="LoginController as login" class="box-content-login">
+  <div class="header-login">
+    <a href="http://www.ktctracking.com" class="image-logo"></a>
+  </div>
+  <div class="body-login">
+    <div class="login-bg-blur" login-bg-blur></div>
+    <div class="content-login">
+      <div class="login-panel">
+        <div class="login-header">
+          <div class="header-left">
+            <h3><i class="icon-key"></i> {{ text.page_login.title }}</h3>
+          </div>
+          <div class="header-right">
+            <div class="icon-language">
+              <a class="icon-en" ng-href="/en/{{ url_path }}"></a>
+              <i class="line-separator"></i>
+              <a class="icon-th" ng-href="/th/{{ url_path }}"></a>
+            </div>
+          </div>
+        </div>
+        <form ng-submit="getLogin(username, password, remember, volume)">
+          <input type="text" ng-model="username" placeholder="{{ text.page_login.username }}">
+          <input type="password" ng-model="password" placeholder="{{ text.page_login.password }}">
+          <div class="checkbox icheck">
+            <label>
+              <input i-checkbox-square checkbox-class="icheckbox_square-yellow" ng-model="remember" type="checkbox"> {{ text.page_login.remember }}
+            </label>
+          </div>
+          <button type="submit" class="btn-login">{{ text.page_login.login }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Message -->
+  <modal-message visible="showModalMessage"></modal-message>
+</div>

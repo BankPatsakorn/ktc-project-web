@@ -1,0 +1,153 @@
+<div ng-controller="TrackingHistoryController as tracking">
+  <div class="container body">
+    <div class="main_container">
+      <!-- Header -->
+      <div ng-include="'header/views/header.client.view.html'"></div>
+      <!-- Sidebar -->
+      <div ng-include="'sidebar/views/sidebar.client.view.html'"></div>
+      <!-- Content -->
+      <div auto-height class="right_col">
+        <div class="page-title">
+          <div class="title_left header-search-data">
+            <h3>{{ text.page_tracking_history.title }}</h3>
+            <div class="box-select">
+              <select
+                class="form-control"
+                ng-model="selectVehicle"
+                title="{{ text.page_tracking_history.select_vehicle }}"
+                data="{{ dataSelectVehicle }}"
+                select2
+                style="width: 100%;">
+              </select>
+            </div>
+            <div class="box-date-picker">
+              <div class="form-group">
+                <div class="input-group">
+                  <input date-range-picker-year-month-date-time-start-end
+                    class="form-control pull-right" 
+                    ng-model="selectDate"
+                    ng-change="setTextDate(selectDate)"
+                    type="text">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-btn-search">
+              <button type="button" class="btn btn-round btn-block btn-success" ng-click="searchVehicleHistory()">
+                <i class="fa fa-search"></i> {{ text.page_tracking_history.btn_search }}
+              </button>
+            </div>
+            <div ng-show="dataTrackingHistory.length > 0" class="box-btn-search">
+              <button type="button" class="btn btn-round btn-block btn-primary" ng-click="addRoute()">
+                <i class="fa fa-road"></i> {{ text.page_tracking_history.btn_route }}
+              </button>
+            </div>
+            <div ng-show="dataTrackingHistory.length > 0" class="box-btn-search">
+              <button type="button" class="btn btn-round btn-block btn-info" ng-click="exportVehicleHistory()">
+                <i class="fa fa-download"></i> {{ text.page_tracking_history.btn_export }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row grid">
+          <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8">
+            <div map-full-page class="box-map" id="map-history">
+              <div class="box-input-position">
+                <div class="input-group">
+                  <input type="text" class="form-control text-center input-sm" ng-model="dataPosition" placeholder="{{ text.page_tracking_history.position }}"/>
+                  <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                </div>
+              </div>
+              <div ng-show="createStation || updateStation" class="bg-station"></div>
+              <div ng-show="createStation || updateStation" class="box-station">
+                <input class="form-control input-sm" type="text" ng-model="stationName" placeholder="{{ text.page_tracking_history.station_name }}" />
+                <select
+                  class="form-control"
+                  ng-model="selectStationType"
+                  title="{{ text.page_tracking_history.select_station }}"
+                  data="{{ $iService.stationType() }}"
+                  select2>
+                </select>
+                <button type="button" class="btn btn-primary btn-flat" ng-click="confirmStation()">{{ text.page_tracking_history.btn_confirm }}</button>
+                <button type="button" class="btn btn-default btn-flat" ng-click="cancelStation()">{{ text.page_tracking_history.btn_close }}</button>
+              </div>
+              <div ng-show="createRoute || updateRoute" class="bg-route"></div>
+              <div ng-show="createRoute || updateRoute" class="box-route">
+                <input class="form-control input-sm" type="text" ng-model="routeName" placeholder="{{ text.page_tracking_history.route_name }}" />
+                <button type="button" class="btn btn-primary btn-flat" ng-click="confirmRoute()">{{ text.page_tracking_history.btn_confirm }}</button>
+                <button type="button" class="btn btn-default btn-flat" ng-click="cancelRoute()">{{ text.page_tracking_history.btn_close }}</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+            <div panel-height class="x_panel">
+              <div class="row x_title">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="input-group">
+                    <input type="text" class="form-control text-center input-sm" ng-model="ListDetail" placeholder="{{ text.page_tracking_history.search_vehicle }}"/>
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div  class="x_content">
+                <div slim-scroll-list-right class="box-list-vehical">
+                  <div class="box-content-tracking-history" ng-repeat="tracking in dataTrackingHistory | filter:filterData" ng-click="focusPosition(tracking.id)">
+                    <div class="row-1 flex-item flex-container">
+                      <div class="col-1">
+                        <small ng-class="$iService.colorBadge(tracking.status)">{{ $index + 1 }}</small>
+                      </div>
+                      <div class="col-2 flex-item">
+                        <label><i class="fa fa-history"></i> {{ calWorkTime(tracking.minute_working) }} {{ text.page_tracking_history.hr }} </label>
+                      </div>
+                      <div class="col-3">
+                        <label ng-class="$iService.colorBadge(tracking.status)">{{ tracking.status_text }}</label>
+                      </div>
+                    </div>
+                    <div class="row-2 flex-item flex-container">
+                      <div class="col flex-item">
+                        <div class="line-1">
+                          <small>
+                            <i class="fa fa-map-marker"></i>
+                            <label>{{ text.page_tracking_history.place }}</label>
+                            <span>{{ $iService.setTextLocation(tracking) }}</span>
+                          </small>
+                        </div>
+                        <div class="line-2">
+                          <small>
+                            <i class="fa fa-calendar-o"></i>
+                            <label>{{ text.page_tracking_history.gps_datetime }}</label>
+                            <span>{{ $iService.formatTextDateTime(tracking.gps_datetime) }}</span>
+                          </small>
+                        </div>
+                        <div class="line-3">
+                          <small>
+                            <i class="fa fa-tachometer"></i>
+                            <label>{{ text.page_tracking_history.speed }}</label>
+                            <span>{{ tracking.speed }}</span>
+                            <span>{{ text.page_tracking_history.km_hr }}</span>
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div ng-include="'footer/views/footer.client.view.html'"></div>
+    </div>
+  </div>
+  <!-- Alert Message -->
+  <alert-message class="box-alert-message"></alert-message>
+  <!-- Modal Message -->
+  <modal-message visible="showModalMessage"></modal-message>
+  <!-- Modal Logout -->
+  <modal-logout visible="showModalLogout"></modal-logout>
+</div>

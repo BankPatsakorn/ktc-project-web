@@ -1,0 +1,77 @@
+<div ng-controller="SettingCompanyController as setting" ng-show="authentication.role == 'admin'">
+  <div class="container body">
+    <div class="main_container">
+      <!-- Header -->
+      <div ng-include="'header/views/header.client.view.html'"></div>
+      <!-- Sidebar -->
+      <div ng-include="'sidebar/views/sidebar.client.view.html'"></div>
+      <!-- Content -->
+      <div auto-height class="right_col">
+        <div class="page-title">
+          <div class="title_left">
+            <h3>{{ text.page_setting_company.title }}</h3>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2><i class="fa fa-address-card-o"></i> {{ text.page_setting_company.panel_title }}</h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <form class="form-horizontal form-label-left input_mask-horizontal">
+                  <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <input ng-model="inputCompanyName" type="text" class="form-control has-feedback-left" placeholder="{{ text.page_setting_company.company_name }}">
+                        <i class="fa fa-address-card form-control-feedback left"></i>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <input ng-model="inputAddress" type="text" class="form-control has-feedback-left" placeholder="{{ text.page_setting_company.address }}">
+                        <i class="fa fa-address-card form-control-feedback left"></i>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <input ng-model="inputPhone" type="text" class="form-control has-feedback-left" placeholder="{{ text.page_setting_company.phone }}">
+                        <i class="fa fa-phone form-control-feedback left"></i>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <input ng-model="inputFax" type="text" class="form-control has-feedback-left" placeholder="{{ text.page_setting_company.fax }}">
+                        <i class="fa fa-fax form-control-feedback left"></i>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <input ng-model="inputInstallLocation" type="text" class="form-control has-feedback-left" placeholder="{{ text.page_setting_company.install_location }}">
+                        <i class="fa fa-wrench form-control-feedback left"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ln_solid"></div>
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <button class="btn btn-success btn-panel-submit" ng-click="submit()">{{ text.page_setting_company.btn_edit }}</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div ng-include="'footer/views/footer.client.view.html'"></div>
+    </div>
+  </div>
+  <!-- Alert Message -->
+  <alert-message class="box-alert-message"></alert-message>
+  <!-- Modal Message -->
+  <modal-message visible="showModalMessage"></modal-message>
+  <!-- Modal Logout -->
+  <modal-logout visible="showModalLogout"></modal-logout>
+</div>

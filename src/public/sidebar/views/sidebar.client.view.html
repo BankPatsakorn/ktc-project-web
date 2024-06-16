@@ -1,0 +1,92 @@
+<aside ng-controller="SidebarController as sidebar">
+  <div class="col-md-3 left_col">
+    <div class="left_col scroll-view">
+      <div class="navbar nav_title" style="border: 0;">
+        <a href="/" class="site_title"><i class="icon-gps"></i> <span>{{ text.header.title }}</span></a>
+      </div>
+
+      <div class="clearfix"></div>
+
+      <!-- menu profile quick info -->
+      <div class="profile clearfix">
+        <div class="profile_pic">
+          <img ng-show="authentication.url_avatar === 'null'" src="../../static/assets/img/user_avatar.png" class="img-circle profile_img">
+        </div>
+        <div class="profile_info">
+          <span>{{ text.sidebar.welcome }}</span>
+          <h2 ng-show="authentication.first_name !== 'null' && authentication.last_name !== 'null'">{{ authentication.first_name }} {{ authentication.last_name }}</h2>
+        </div>
+      </div>
+
+      <br/>
+
+      <!-- sidebar menu -->
+      <div sidebar-select class="main_menu_side hidden-print main_menu">
+        <div class="menu_section">
+          <h3>{{ text.sidebar.menu }}</h3>
+          <ul class="nav side-menu">
+            <li><a><i class="sidebar-icon icon-forklift"></i> {{ text.sidebar.dashboard }} <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu">
+                <li><a ng-href="/{{ url_lang }}/dashboard_all">{{ text.sidebar.dashboard_all }}</a></li>
+              </ul>
+            </li>
+            <li><a><i class="sidebar-icon icon-gps"></i> {{ text.sidebar.tracking }} <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu">
+                <li><a ng-href="/{{ url_lang }}/tracking_realtime">{{ text.sidebar.tracking_realtime }}</a></li>
+                <li><a ng-href="/{{ url_lang }}/tracking_history">{{ text.sidebar.tracking_history }}</a></li>
+              </ul>
+            </li>
+            <!-- <li><a><i class="sidebar-icon icon-camera"></i> {{ text.sidebar.camera }} <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu">
+                <li><a ng-href="/{{ url_lang }}/camera_realtime">{{ text.sidebar.camera_realtime }}</a></li>
+                <li><a ng-href="/{{ url_lang }}/camera_snapshot">{{ text.sidebar.camera_snapshot }}</a></li>
+              </ul>
+            </li> -->
+            <li ng-show="authentication.role == 'admin' || authentication.role == 'tnt'"><a><i class="sidebar-icon fa fa-file-text"></i> {{ text.sidebar.report }} <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu">
+                <li ng-show="authentication.role == 'admin' || authentication.role == 'tnt'"><a ng-href="/{{ url_lang }}/report_usage_vehicle">{{ text.sidebar.report_usage_vehicle }}</a></li>
+                <!-- <li><a ng-href="/{{ url_lang }}/report_idling">{{ text.sidebar.report_idling }}</a></li>
+                <li><a ng-href="/{{ url_lang }}/report_parking">{{ text.sidebar.report_parking }}</a></li>
+                <li><a ng-href="/{{ url_lang }}/report_over_speed">{{ text.sidebar.report_over_speed }}</a></li>
+                <li><a ng-href="/{{ url_lang }}/report_inout_station">{{ text.sidebar.report_inout_station }}</a></li>
+                <li><a ng-href="/{{ url_lang }}/report_sliding_card">{{ text.sidebar.report_sliding_card }}</a></li> -->
+                <li><a ng-href="/{{ url_lang }}/report_scan_card">{{ text.sidebar.report_scan_card }}</a></li>
+                <li><a ng-href="/{{ url_lang }}/report_usage_vehicle_and_driver">{{ text.sidebar.report_usage_vehicle_and_driver }}</a></li>
+                <li ng-show="authentication.role == 'admin' || authentication.role == 'tnt'"><a ng-href="/{{ url_lang }}/report_summary">{{ text.sidebar.report_summary }}</a></li>
+              </ul>
+            </li>
+            <li ng-show="authentication.role == 'admin' || authentication.role == 'tnt'"><a><i class="sidebar-icon fa fa-area-chart"></i> {{ text.sidebar.graph }} <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu">
+                <li ng-show="authentication.role == 'admin' || authentication.role == 'tnt'"><a ng-href="/{{ url_lang }}/graph_usage_vehicle">{{ text.sidebar.graph_usage_vehicle }}</a></li>
+                <li ng-show="authentication.role == 'admin' || authentication.role == 'tnt'"><a ng-href="/{{ url_lang }}/graph_efficient">{{ text.sidebar.graph_efficient }}</a></li>
+                <li ng-show="authentication.role == 'admin' || authentication.role == 'tnt'"><a ng-href="/{{ url_lang }}/graph_over_speed">{{ text.sidebar.graph_over_speed }}</a></li>
+                <!-- <li ng-show="authentication.role == 'admin'"><a ng-href="/{{ url_lang }}/graph_fuel">{{ text.sidebar.graph_fuel }}</a></li> -->
+                <li ng-show="authentication.role == 'admin' || authentication.role == 'tnt'"><a ng-href="/{{ url_lang }}/graph_battery">{{ text.sidebar.graph_battery }}</a></li>
+                <li ng-show="authentication.role == 'admin' || authentication.role == 'tnt'"><a ng-href="/{{ url_lang }}/graph_work_time">{{ text.sidebar.graph_work_time }}</a></li>
+                <li ng-show="authentication.role == 'admin'"><a ng-href="/{{ url_lang }}/graph_vibration">{{ text.sidebar.graph_vibration }}</a></li>
+              </ul>
+            </li>
+            <li><a><i class="sidebar-icon fa fa-wrench"></i> {{ text.sidebar.maintenance }} <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu">
+                <!-- <li><a ng-href="/{{ url_lang }}/maintenance_lubricant">{{ text.sidebar.maintenance_lubricant }}</a></li>
+                <li><a ng-href="/{{ url_lang }}/maintenance_tire">{{ text.sidebar.maintenance_tire }}</a></li> -->
+                <li><a ng-href="/{{ url_lang }}/maintenance_work_time_batt">{{ text.sidebar.maintenance_work_time_batt }}</a></li>
+                <li><a ng-href="/{{ url_lang }}/maintenance_work_time_lpg">{{ text.sidebar.maintenance_work_time_lpg }}</a></li>
+              </ul>
+            </li>
+            <li ng-show="authentication.role == 'admin' || authentication.role == 'tnt'"><a><i class="sidebar-icon fa fa-cogs"></i> {{ text.sidebar.setting }} <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu">
+                <!-- <li><a ng-href="/{{ url_lang }}/setting_company">{{ text.sidebar.setting_company }}</a></li> -->
+                <li ng-show="authentication.role == 'admin' || authentication.role == 'tnt'"><a ng-href="/{{ url_lang }}/setting_driver">{{ text.sidebar.setting_driver }}</a></li>
+                <li ng-show="authentication.role == 'admin'"><a ng-href="/{{ url_lang }}/setting_vehicle">{{ text.sidebar.setting_vehicle }}</a></li>
+                <li ng-show="authentication.role == 'admin'"><a ng-href="/{{ url_lang }}/setting_group">{{ text.sidebar.setting_group }}</a></li>
+                <li ng-show="authentication.role == 'admin'"><a ng-href="/{{ url_lang }}/setting_staff">{{ text.sidebar.setting_staff }}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</aside>

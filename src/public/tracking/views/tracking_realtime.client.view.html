@@ -1,0 +1,122 @@
+<div ng-controller="TrackingRealtimeController as tracking">
+  <div class="container body">
+    <div class="main_container">
+      <!-- Header -->
+      <div ng-include="'header/views/header.client.view.html'"></div>
+      <!-- Sidebar -->
+      <div ng-include="'sidebar/views/sidebar.client.view.html'"></div>
+      <!-- Content -->
+      <div auto-height class="right_col">
+        <div class="page-title">
+          <div class="title_left">
+            <h3>{{ text.page_tracking_realtime.title }}</h3>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8">
+            <div map-full-page class="box-map" id="map-realtime">
+              <div ng-if="followModemId" class="btn-map btn-unfollow" ng-click="unfollowVehicle()">{{ text.page_tracking_realtime.btn_unfollow }}</div>
+              <div class="box-input-position">
+                <div class="input-group">
+                  <input type="text" class="form-control text-center input-sm" ng-model="dataPosition" placeholder="{{ text.page_tracking_realtime.position }}"/>
+                  <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                </div>
+              </div>
+              <div ng-show="createStation || updateStation" class="bg-station"></div>
+              <div ng-show="createStation || updateStation" class="box-station">
+                <input class="form-control input-sm" type="text" ng-model="stationName" placeholder="{{ text.page_tracking_realtime.station_name }}" />
+                <select
+                  class="form-control"
+                  ng-model="selectStationType"
+                  title="{{ text.page_tracking_realtime.select_station }}"
+                  data="{{ $iService.stationType() }}"
+                  select2>
+                </select>
+                <button type="button" class="btn btn-primary btn-flat" ng-click="confirmStation()">{{ text.page_tracking_realtime.btn_confirm }}</button>
+                <button type="button" class="btn btn-default btn-flat" ng-click="cancelStation()">{{ text.page_tracking_realtime.btn_close }}</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+            <div panel-height class="x_panel">
+              <div class="row x_title">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="input-group">
+                    <input type="text" class="form-control text-center input-sm" ng-model="ListDetail" placeholder="{{ text.page_tracking_realtime.search_vehicle }}"/>
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div  class="x_content">
+                <div slim-scroll-list-right class="box-list-vehical">
+                  <div class="box-content-tracking-realtime" ng-repeat="tracking in dataTrackingRealtime | filter:filterData" ng-click="followVehicle(tracking)">
+                    <div ng-show="tracking.status_overtime" class="box-overtime">
+                      <div>
+                        <h1>{{ tracking.status_overtime_text }}</h1>
+                      </div>
+                    </div>
+                    <div class="row-1 flex-item flex-container">
+                      <div class="col-1">
+                        <small ng-class="$iService.colorBadge(tracking.status)">{{ $index + 1 }}</small>
+                      </div>
+                      <div class="col-2 flex-item">
+                        <label>{{ tracking.vehicle_name }} </label>
+                      </div>
+                      <div class="col-3">
+                        <label ng-class="$iService.colorBadge(tracking.status)">{{ tracking.status_text }}</label>
+                      </div>
+                    </div>
+                    <div class="row-2 flex-item flex-container">
+                      <div class="col-1 flex-item">
+                        <div class="line-1">
+                          <small>
+                            <i class="fa fa-map-marker"></i>
+                            <label>{{ text.page_tracking_realtime.place }}</label>
+                            <span>{{ $iService.setTextLocation(tracking) }}</span>
+                          </small>
+                        </div>
+                        <div class="line-2">
+                          <small>
+                            <i class="fa fa-calendar-o"></i>
+                            <label>{{ text.page_tracking_realtime.gps_datetime }}</label>
+                            <span>{{ $iService.formatTextDateTime(tracking.gps_datetime) }}</span>
+                          </small>
+                        </div>
+                        <div class="line-3">
+                          <small>
+                            <i class="fa fa-clock-o"></i>
+                            <label>{{ text.page_tracking_realtime.last_update }}</label>
+                            <span>{{ $iService.formatTextDiff($iService.diffDuration(tracking.gps_datetime)) }}</span>
+                          </small>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <label class="title-gauge">
+                          {{ text.page_tracking_realtime.limit_speed }}{{ tracking.speedmax }}
+                        </label>
+                        <gauge-speed class="box-gauge-speed" value="{{ $iService.calSpeed(tracking) }}" high="{{ tracking.speedmax }}"></gauge-speed>
+                        <label class="title-gauge">
+                          {{ text.page_tracking_realtime.km_hr }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div ng-include="'footer/views/footer.client.view.html'"></div>
+    </div>
+  </div>
+  <!-- Alert Message -->
+  <alert-message class="box-alert-message"></alert-message>
+  <!-- Modal Message -->
+  <modal-message visible="showModalMessage"></modal-message>
+  <!-- Modal Logout -->
+  <modal-logout visible="showModalLogout"></modal-logout>
+</div>

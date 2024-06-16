@@ -1,0 +1,35 @@
+{
+  "name": "highcharts-multicolor-series",
+  "version": "2.4.0",
+  "homepage": "http://blacklabel.github.io/multicolor_series/",
+  "authors": [
+    "Sebastian Bochan <sebastian@blacklabel.pl>",
+    "Paweł Fus <pawel@blacklabel.pl>",
+    "Kacper Madej <kacper@blacklabel.pl>"
+  ],
+  "description": "Highcharts plugin that adds new series: multicolor-series, where oyu can define color for each part of a path, between two points.",
+  "main": "multicolor_series.js",
+  "keywords": [
+    "highcharts",
+    "multicolor",
+    "highcharts-addon"
+  ],
+  "license": "Creative Commons Attribution (CC)",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "2.4.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.4.0",
+    "commit": "428e3935dfb1c8aa4270c89c6b39a30333c69793"
+  },
+  "_source": "https://github.com/blacklabel/multicolor_series.git",
+  "_target": "^2.2.1",
+  "_originalSource": "highcharts-multicolor-series"
+}

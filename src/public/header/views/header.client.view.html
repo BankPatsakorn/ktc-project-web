@@ -1,0 +1,104 @@
+<header ng-controller="HeaderController as header">
+  <div class="top_nav">
+    <div class="nav_menu">
+      <nav>
+        <div class="nav toggle">
+          <a menu-toggle id="menu_toggle"><i class="fa fa-bars"></i></a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <img class="image-avatar" ng-show="authentication.url_avatar === 'null'" src="../../static/assets/img/user_avatar.png">
+              <p class="text-name" ng-show="authentication.first_name !== 'null' && authentication.last_name !== 'null'">{{ authentication.first_name }} {{ authentication.last_name }}</p>
+              <span class="fa fa-angle-down"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-usermenu pull-right">
+              <li><a ng-href="/{{ url_lang }}/change_password"> {{ text.header.change_password }}</a></li>
+              <li>
+                <a href="#" ng-click="$iService.toggleModalLogout()">
+                  <i class="fa fa-sign-out pull-right"></i> {{ text.header.logout }}
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" class="menu-lang dropdown-toggle" data-toggle="dropdown" aria-expanded="false" tooltip data-placement="bottom" data-title="{{ text.header.change_language }}">
+              <i><img class="image-lang" ng-src="{{ image_lang }}"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-lang">
+              <li>
+                <a ng-href="/en/{{ url_path }}">
+                  <img ng-src="{{ image_lang_en }}"><p>{{ text.header.lang_en }}</p>
+                </a>
+              </li>
+              <li>
+                <a ng-href="/th/{{ url_path }}">
+                  <img ng-src="{{ image_lang_th }}"><p>{{ text.header.lang_th }}</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li ng-show="authentication.role == 'admin'" tooltip data-placement="bottom" data-title="{{ text.header.notifications }}">
+            <a href="#" class="menu-notify dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+              <i class="glyphicon glyphicon-bell"></i>
+              <span class="badge bg-yellow" ng-if="countNotification > 0">{{ resultNotify.length }}</span>
+            </a>
+            <ul class="dropdown-menu pull-right">
+              <li class="dropdown-menu-header">
+                <div class="input-group">
+                  <input class="form-control text-center input-sm" type="text" ng-model="listNotify" placeholder="{{ text.header.search_notifications }}"/>
+                  <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                </div>
+                <span >{{ text.header.you_have }} {{ resultNotify.length }} {{ text.header.notifications }}</span>
+              </li>
+              <li class="dropdown-menu-body">
+                <ul class="menu">
+                  <li ng-repeat="notification in listNotifications | orderBy:'date_event':true | filter:listNotify as resultNotify track by $index">
+                    <span ng-if="url_lang == 'en' && $index < 100">
+                      <i class="fa fa-warning" ng-class="{'status-green':notification.colour == 1, 'status-blue':notification.colour == 2, 'status-red':notification.colour == 3, 'status-yellow':notification.colour == 4}"></i> {{ notification.message_en }} | {{ $iService.formatTextDateTime(notification.date_event) }}
+                    </span>
+                    <span ng-if="url_lang == 'th' && $index < 100">
+                      <i class="fa fa-warning" ng-class="{'status-green':notification.colour == 1, 'status-blue':notification.colour == 2, 'status-red':notification.colour == 3, 'status-yellow':notification.colour == 4}"></i> {{ notification.message_th }} | {{ $iService.formatTextDateTime(notification.date_event) }}
+                    </span>
+                  </li>
+                </ul>
+              </li>
+              <li class="dropdown-menu-footer control" ng-if="countNotification > 0" ng-click="clearAllNotification()">
+                <span>{{ text.header.clear_all }}</span>
+              </li>
+            </ul>
+          </li>
+          <li ng-show="authentication.role == 'admin'" tooltip data-placement="bottom" data-title="{{ text.header.list_station }}">
+            <a href="#" class="menu-station dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+              <i class="glyphicon glyphicon-globe"></i>
+              <span class="badge bg-purple" ng-if="list_geom.length > 0">{{ resultGEOM.length }}</span>
+            </a>
+            <ul class="dropdown-menu pull-right">
+              <li class="dropdown-menu-header">
+                <div class="input-group">
+                  <input class="form-control text-center input-sm" type="text" ng-model="listGEOM" placeholder="{{ text.header.search_station }}"/>
+                  <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                </div>
+                <span >{{ text.header.you_have }} {{ resultGEOM.length }} {{ text.header.list_station }}</span>
+              </li>
+              <li class="dropdown-menu-body">
+                <ul class="menu">
+                  <li ng-repeat="geom in list_geom | filter:listGEOM as resultGEOM track by $index">
+                    <span ng-if="$index < 100" class="control" ng-click="callBoundMap(geom.bound1, geom.bound2)">
+                      <i class="fa fa-object-ungroup" ng-class="{'status-blue':geom.station_type == 1, 'status-green':geom.station_type == 2, 'status-red':geom.station_type == 3}"></i> {{ geom.station_name }}
+                    </span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li tooltip data-placement="bottom" data-title="{{ text.header.on_off_volume }}">
+            <a href="#" class="menu-volume" ng-click="toggleVolume()">
+              <i ng-class="['glyphicon', {'glyphicon-volume-up': volume == true, 'glyphicon-volume-off': volume == false}]"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

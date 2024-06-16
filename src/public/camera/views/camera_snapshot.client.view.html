@@ -1,0 +1,93 @@
+<div ng-controller="CameraSnapshotController as camera">
+  <div class="container body">
+    <div class="main_container">
+      <!-- Header -->
+      <div ng-include="'header/views/header.client.view.html'"></div>
+      <!-- Sidebar -->
+      <div ng-include="'sidebar/views/sidebar.client.view.html'"></div>
+      <!-- Content -->
+      <div auto-height class="right_col">
+        <div class="page-title">
+          <div class="title_left header-search-data">
+            <h3>{{ text.page_camera_snapshot.title }}</h3>
+            <div class="box-select">
+              <select
+                class="form-control"
+                ng-model="selectVehicle"
+                title="{{ text.page_camera_snapshot.select_vehicle }}"
+                data="{{ vehicles }}"
+                select2
+                style="width: 100%;">
+              </select>
+            </div>
+            <div class="box-date-picker">
+              <div class="form-group">
+                <div class="input-group">
+                  <input date-range-picker-year-month-date-time-start-end
+                    class="form-control pull-right" 
+                    ng-model="selectDate"
+                    ng-change="setTextDate(selectDate)"
+                    type="text">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-btn-search">
+              <button type="button" class="btn btn-round btn-block btn-success" ng-click="searchImageHistory()">
+                <i class="fa fa-search"></i> {{ text.page_camera_snapshot.btn_search }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8">
+            <div panel-height class="x_panel">
+              <div class="x_title">
+                <h2><i class="fa fa-picture-o"></i> {{ imageName }}</h2>
+                <div class="nav navbar-right">
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <div class="box-display-image-history">
+                  <img display-image data-ng-src="{{ imageView }}" data-err-src="{{ noImage }}"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+            <div panel-height class="x_panel">
+              <div class="row x_title">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="input-group">
+                    <input type="text" class="form-control text-center input-sm" ng-model="ListDetail" placeholder="{{ text.page_camera_snapshot.search_image }}">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div  class="x_content">
+                <div slim-scroll-list-right class="box-list-image-history">
+                  <div ng-class="['list-image-history', {'selected': image.img_name === imageName}]" ng-repeat="image in imagePlayBack | filter:ListDetail" ng-click="getViewImage(image.img_name)">
+                    <small>{{ image.img_name }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div ng-include="'footer/views/footer.client.view.html'"></div>
+    </div>
+  </div>
+  <!-- Alert Message -->
+  <alert-message class="box-alert-message"></alert-message>
+  <!-- Modal Message -->
+  <modal-message visible="showModalMessage"></modal-message>
+  <!-- Modal Logout -->
+  <modal-logout visible="showModalLogout"></modal-logout>
+</div>

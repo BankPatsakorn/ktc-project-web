@@ -1,0 +1,61 @@
+<div ng-controller="SettingDriverController as setting" ng-show="authentication.role == 'admin' || authentication.role == 'tnt'">
+  <div class="container body">
+    <div class="main_container">
+      <!-- Header -->
+      <div ng-include="'header/views/header.client.view.html'"></div>
+      <!-- Sidebar -->
+      <div ng-include="'sidebar/views/sidebar.client.view.html'"></div>
+      <!-- Content -->
+      <div auto-height class="right_col">
+        <div class="page-title">
+          <div class="title_left">
+            <h3>
+              {{ text.page_setting_driver.title }}
+              <button class="btn btn-round btn-success btn-add" ng-click="toggleModalAdd()">
+                <i class="fa fa-plus"></i> {{ text.page_setting_driver.btn_add }}
+              </button>
+            </h3>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="x_panel">
+              <div class="x_content">
+                <table table-setting-driver
+                  class="table table-striped table-bordered table-hover nowrap"
+                  cellspacing="0" width="100%"
+                  data="{{ dataSettingDriver }}"
+                  fn-toggle-modal-r-f-i-d="toggleModalRFID(data)"
+                  fn-toggle-modal-edit="toggleModalEdit(data)"
+                  fn-toggle-modal-delete="toggleModalDelete(data)">
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div ng-include="'footer/views/footer.client.view.html'"></div>
+    </div>
+  </div>
+  <!-- Modal Setting Driver RFID -->
+  <modal-setting-driver-r-f-i-d
+    vehicle="{{ dataSelectVehicle }}"
+    sharedobj="modalSettingDriverRFID"
+    fn-modal-confirm="confirmEditDriverRFID(data)">
+  </modal-setting-driver-r-f-i-d>
+  <!-- Modal Setting Driver -->
+  <modal-setting-driver
+    sharedobj="modalSettingDriver"
+    fn-modal-confirm="confirmEdit(data)">
+  </modal-setting-driver>
+  <!-- Modal Delete Driver -->
+  <modal-delete-driver visible="showModalDeleteDriver"></modal-delete-driver>
+  <!-- Alert Message -->
+  <alert-message class="box-alert-message"></alert-message>
+  <!-- Modal Message -->
+  <modal-message visible="showModalMessage"></modal-message>
+  <!-- Modal Logout -->
+  <modal-logout visible="showModalLogout"></modal-logout>
+</div>

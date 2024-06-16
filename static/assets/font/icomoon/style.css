@@ -1,0 +1,60 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?dozxx2');
+  src:  url('fonts/icomoon.eot?dozxx2#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?dozxx2') format('truetype'),
+    url('fonts/icomoon.woff?dozxx2') format('woff'),
+    url('fonts/icomoon.svg?dozxx2#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-forklift:before {
+  content: "\e900";
+}
+.icon-sugarcane:before {
+  content: "\e901";
+}
+.icon-harvester:before {
+  content: "\e902";
+}
+.icon-truck:before {
+  content: "\e903";
+}
+.icon-tractor:before {
+  content: "\e904";
+}
+.icon-pickup:before {
+  content: "\e905";
+}
+.icon-camera:before {
+  content: "\e906";
+}
+.icon-gps:before {
+  content: "\e907";
+}
+.icon-monitor:before {
+  content: "\e908";
+}
+.icon-fuel:before {
+  content: "\e909";
+}
+.icon-gas-station:before {
+  content: "\e90a";
+}

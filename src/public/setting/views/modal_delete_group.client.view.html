@@ -1,0 +1,17 @@
+<div class="modal fade">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title">{{ text.modal_delete_group.title }}</h3>
+      </div>
+      <div class="modal-body">
+        <p>{{ text.modal_delete_group.detail }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">{{ text.modal_delete_group.btn_close }}</button>
+        <button type="button" class="btn btn-primary btn-flat" data-dismiss="modal" ng-click="confirmDelete()">{{ text.modal_delete_group.btn_confirm }}</button>
+      </div>
+    </div>
+  </div>
+</div>
